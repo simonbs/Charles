@@ -15,7 +15,10 @@
 
 - (void)dealloc
 {
+    self.seasonNumber = nil;
+    self.episodeNumber = nil;
     self.name = nil;
+    self.fullName = nil;
     self.videoPath = nil;
     self.subtitlePath = nil;
 }

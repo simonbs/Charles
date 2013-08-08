@@ -10,7 +10,10 @@
 
 @interface EpisodeViewModel : NSObject
 
+@property (nonatomic, strong) NSNumber *seasonNumber;
+@property (nonatomic, strong) NSNumber *episodeNumber;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *fullName;
 @property (nonatomic, strong) NSString *videoPath;
 @property (nonatomic, strong) NSString *subtitlePath;
 

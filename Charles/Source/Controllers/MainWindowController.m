@@ -245,12 +245,25 @@
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
+    NSString *seasonFolderName = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Season %@", @"MainWindowController", @"Name of season folder. %@ is replaced with the season number."), self.selectedSeason.seasonNumber];
+    NSString *seasonFolder = [self.outputFolderPath stringByAppendingPathComponent:seasonFolderName];
+    NSError *error = nil;
+    [fileManager createDirectoryAtPath:seasonFolder withIntermediateDirectories:NO attributes:nil error:&error];
+    if (error)
+    {
+        NSLog(@"Could not create directory '%@': %@", seasonFolder, error);
+    }
+    
     for (EpisodeViewModel *model in self.episodeViewModels)
     {
         NSString *name = model.name;
+        NSString *fullName = model.fullName;
+        NSNumber *episodeNumber = model.episodeNumber;
         NSString *videoPath = model.videoPath;
         NSString *subtitlePath = model.subtitlePath;
-        NSString *episodeFolder = [self.outputFolderPath stringByAppendingPathComponent:name];
+        
+        NSString *episodeFolderName = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Episode %@ - %@", @"MainWindowController", @"Name of episode folders. First %@ is replaced with episode number, second %@ is replaced with the episode name."), episodeNumber, name];
+        NSString *episodeFolder = [seasonFolder stringByAppendingPathComponent:episodeFolderName];
         
         // Create directory for files
         if (videoPath || subtitlePath)
@@ -266,7 +279,7 @@
         // Move video file
         if (videoPath)
         {
-            NSString *newVideoFileName = [NSString stringWithFormat:@"%@.%@", name, [videoPath pathExtension]];
+            NSString *newVideoFileName = [NSString stringWithFormat:@"%@.%@", fullName, [videoPath pathExtension]];
             NSString *newVideoPath = [episodeFolder stringByAppendingPathComponent:newVideoFileName];
             
             NSError *error = nil;
@@ -280,7 +293,7 @@
         // Move subtitle file
         if (subtitlePath)
         {
-            NSString *newSubtitleFileName = [NSString stringWithFormat:@"%@.%@", name, [subtitlePath pathExtension]];
+            NSString *newSubtitleFileName = [NSString stringWithFormat:@"%@.%@", fullName, [subtitlePath pathExtension]];
             NSString *newSubtitlePath = [episodeFolder stringByAppendingPathComponent:newSubtitleFileName];
             
             NSError *error = nil;
@@ -354,8 +367,11 @@
             NSString *episodeNumber = [episodeNumberFormatter stringFromNumber:episode.episodeNumber];
         
             EpisodeViewModel *model = [[EpisodeViewModel alloc] init];
-            model.name = [NSString stringWithFormat:@"S%@E%@ - %@", seasonNumber, episodeNumber, episode.name   ];
-        
+            model.seasonNumber = episode.seasonNumber;
+            model.episodeNumber = episode.episodeNumber;
+            model.name = episode.name;
+            model.fullName = [NSString stringWithFormat:@"S%@E%@ - %@", seasonNumber, episodeNumber, episode.name];
+
             [self.episodeViewModels addObject:model];
         }
     }
