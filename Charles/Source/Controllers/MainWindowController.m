@@ -538,12 +538,12 @@
     EpisodeCell *cell = [tableView makeViewWithIdentifier:kTableViewCellIdentifier owner:self];
     __weak EpisodeCell *weakCell = cell;
     
-    cell.name = model.name;
+    cell.name = model.fullName;
     weakCell.videoName = [self fileNameForPath:model.videoPath];
     weakCell.subtitleName = [self fileNameForPath:model.subtitlePath];
     
     cell.nameChanged = ^(NSString *name) {
-        model.name = name;
+        model.fullName = name;
     };
     
     cell.videoPathButtonClicked = ^{
