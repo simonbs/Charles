@@ -6,4 +6,4 @@
 //  Copyright (c) 2013 intuitaps. All rights reserved.
 //
 
-#define TVDBAPIKey @"72F259E1DA3DE673"
+#define TVDBAPIKey @""
