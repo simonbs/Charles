@@ -11,6 +11,8 @@ Charles helps you rename your video files and subtitles using data from TheTVDB.
 
 You can clone the repository and build Charles yourself or you can simply [grab the latest version on the releases page](https://github.com/simonbs/Charles/releases).
 
+Note that if you choose to compile Charles yourself, you must enter your own API key in Constants.h. You can obtain an API key from [TheTVDB.com](http://thetvdb.com).
+
 ## Usage
 
 Using Charles is really simple. First you need your video files and subtitle files - or even just one of the two. Charles doesn't really care if he gets both video and subtitle files or even if he gets a subtitle for each video and vice versa.
